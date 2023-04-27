@@ -50,9 +50,9 @@ class Window(tk.Tk):
 # 建立topFrame
         top_Frame = ttk.LabelFrame(mainFrame, text="台灣銀行匯率查詢", bootstyle="info")
         top_Frame.pack(fill=tk.X)
-        b1 = ttk.Button(top_Frame, text="查詢", bootstyle=SUCCESS)
+        b1 = ttk.Button(top_Frame, text="查詢", bootstyle=SUCCESS, command=pass)
         b1.pack(side=LEFT, padx=5, pady=10)
-        b2 = ttk.Button(top_Frame, text="清除", bootstyle=(INFO, OUTLINE))
+        b2 = ttk.Button(top_Frame, text="清除", bootstyle=(INFO, OUTLINE), command=pass)
         b2.pack(side=LEFT, padx=5, pady=10)
 # 設定欄位名稱
         columns = ('#1', '#2', '#3')
