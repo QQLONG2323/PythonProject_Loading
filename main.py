@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
+from Rate import Rate
 
 
 class Window(tk.Tk):
@@ -50,9 +51,9 @@ class Window(tk.Tk):
 # 建立topFrame
         top_Frame = ttk.LabelFrame(mainFrame, text="台灣銀行匯率查詢", bootstyle="info")
         top_Frame.pack(fill=tk.X)
-        b1 = ttk.Button(top_Frame, text="查詢", bootstyle=SUCCESS, command=pass)
+        b1 = ttk.Button(top_Frame, text="查詢", bootstyle=SUCCESS, command=self.get_rates)
         b1.pack(side=LEFT, padx=5, pady=10)
-        b2 = ttk.Button(top_Frame, text="清除", bootstyle=(INFO, OUTLINE), command=pass)
+        b2 = ttk.Button(top_Frame, text="清除", bootstyle=(INFO, OUTLINE), command=self.clear_rates)
         b2.pack(side=LEFT, padx=5, pady=10)
 # 設定欄位名稱
         columns = ('#1', '#2', '#3')
@@ -89,11 +90,31 @@ class Window(tk.Tk):
         self.tree_A.heading('#6', text='狀態')
         self.tree_A.column("#6", minwidth=0, width=150)
         self.tree_A.pack(side=tk.LEFT, fill=tk.X)
+
+#台灣銀行匯率查詢之"查詢"按鈕
+    def get_rates(self):
+        # 取得匯率資料
+        rate = Rate()
+
+        # 清空 Treeview
+        for i in self.tree_C.get_children():
+            self.tree_C.delete(i)
+
+        # 插入匯率資料到 Treeview
+        for currency, buy_rate, sell_rate in rate.rates:
+            self.tree_C.insert('', 'end', values=(currency, buy_rate, sell_rate))
+
+#台灣銀行匯率查詢之"清除"按鈕
+    def clear_rates(self):
+        for i in self.tree_C.get_children():
+            self.tree_C.delete(i)
+
+
         
 def main():
     window = Window()
     window.mainloop()
-
+    
 
 if __name__ == "__main__":
     main()
